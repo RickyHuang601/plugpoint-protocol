@@ -285,9 +285,10 @@
               </div>
               <button id="copyPromptButton" type="button" class="btn-secondary mt-4 rounded-xl py-3 text-xs font-black uppercase tracking-wider" data-i18n="ai.copy">Copy AI integration prompt</button>
               <p id="copyStatus" class="mt-3 min-h-5 text-center text-xs text-slate-500" aria-live="polite"></p>
-              <div class="mt-auto grid grid-cols-2 gap-3 pt-6">
+              <div class="mt-auto grid grid-cols-1 gap-3 pt-6 sm:grid-cols-3">
                 <a href="/llms.txt" class="btn-quiet rounded-lg p-3 text-center text-xs">llms.txt</a>
                 <a href="/contracts.json" class="btn-quiet rounded-lg p-3 text-center text-xs">contracts.json</a>
+                <a href="https://github.com/RickyHuang601/plugpoint-protocol" target="_blank" rel="noopener noreferrer" class="btn-quiet rounded-lg p-3 text-center text-xs" data-i18n="developer.github">GitHub / SDK ↗</a>
               </div>
             </article>
           </div>
@@ -316,6 +317,7 @@
         <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
           <a class="hover:text-cyan" href="mailto:admin@plugpoint.cc">admin@plugpoint.cc</a>
           <a class="hover:text-gold" href="/whitepaper.html" data-i18n="nav.whitepaper">Whitepaper</a>
+          <a class="hover:text-cyan" href="https://github.com/RickyHuang601/plugpoint-protocol" target="_blank" rel="noopener noreferrer" data-i18n="footer.github">GitHub ↗</a>
           <a class="hover:text-cyan" href="https://bscscan.com/token/0x39801De9D63234D3Cb1344b9df46727001085F4F" target="_blank" rel="noopener noreferrer">PLUG on BscScan ↗</a>
           <a class="hover:text-cyan" href="https://bscscan.com/address/0x0ADD4F526A4e512EAfF46208B45FF298A78a8c09#code" target="_blank" rel="noopener noreferrer">Gateway ↗</a>
           <label for="languageSelect" class="sr-only" data-i18n="language.label">Language</label>
@@ -329,6 +331,6 @@
     </footer>
 
     <script defer src="/vendor/ethers.umd.min.js"></script>
-    <script defer src="/app.js?v=20261118-legal1"></script>
+    <script defer src="/app.js?v=20261118-github1"></script>
   </body>
 </html>

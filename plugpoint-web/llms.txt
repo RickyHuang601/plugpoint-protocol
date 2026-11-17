@@ -8,6 +8,7 @@ RPC: https://bsc-dataseed.binance.org/
 Explorer: https://bscscan.com
 Machine-readable config: https://plugpoint.cc/contracts.json
 Whitepaper v1.0: https://plugpoint.cc/whitepaper.html
+GitHub Repository: https://github.com/RickyHuang601/plugpoint-protocol
 
 ## Canonical contracts
 

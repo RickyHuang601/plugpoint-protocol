@@ -17,7 +17,7 @@ const CONFIG = Object.freeze({
 const TRANSLATIONS = {
   en: {
     "meta.description": "PlugPoint Protocol — zero-tax game points, direct sales, and automatic revenue sharing on BNB Smart Chain.",
-    "nav.aria": "Primary navigation", "nav.buy": "Buy points", "nav.gacha": "Cyber Gacha", "nav.developers": "Developers", "nav.whitepaper": "Whitepaper",
+    "nav.aria": "Primary navigation", "nav.buy": "Buy points", "nav.gacha": "Cyber Gacha", "nav.developers": "Developers", "nav.whitepaper": "Whitepaper", "developer.github": "GitHub / SDK ↗", "footer.github": "GitHub ↗",
     "wallet.connect": "Connect wallet", "wallet.connected": "Wallet connected: {address}", "wallet.missing": "MetaMask was not found. Install a compatible wallet extension first.",
     "network.readOnly": "BSC · READ ONLY", "network.connected": "BSC · CONNECTED",
     "hero.live": "Live on BNB Smart Chain", "hero.title1": "Power every game.", "hero.title2": "Split value on-chain.",
@@ -47,7 +47,7 @@ const TRANSLATIONS = {
     "log.allowanceNeeded": "Approval for {label} is required. Confirm it in your wallet.", "log.allowanceSent": "{label} approval submitted. Waiting for confirmation.", "log.allowanceConfirmed": "{label} approval confirmed.", "log.purchaseSent": "Purchase submitted. Expected receipt: {amount} PLUG.", "log.purchaseComplete": "Purchase complete: {amount} PLUG received.", "log.appLoaded": "App ID #{appId} on-chain data loaded.", "log.registrationSent": "App ID #{appId} registration submitted.", "log.registrationComplete": "Registration complete: you received App ID #{appId}.", "log.spendSent": "{action} PLUG spend submitted. Order {orderId}.", "log.spendComplete": "On-chain spending and revenue split confirmed: {amount} PLUG.", "log.tokenAdded": "PLUG was added to your wallet assets.", "log.tokenNotAdded": "PLUG was not added to your wallet.", "log.refreshed": "On-chain data refreshed.", "log.syncComplete": "BSC Mainnet read-only data synchronized.", "log.syncFailed": "Read-only synchronization failed: {error}"
   },
   "zh-Hant": {
-    "meta.description": "PlugPoint Protocol — BNB Smart Chain 上的零交易稅遊戲點數、直售機與自動分潤閘道。", "nav.aria": "主要導覽", "nav.buy": "購買點數", "nav.gacha": "賽博扭蛋", "nav.developers": "開發者", "nav.whitepaper": "白皮書",
+    "meta.description": "PlugPoint Protocol — BNB Smart Chain 上的零交易稅遊戲點數、直售機與自動分潤閘道。", "nav.aria": "主要導覽", "nav.buy": "購買點數", "nav.gacha": "賽博扭蛋", "nav.developers": "開發者", "nav.whitepaper": "白皮書", "developer.github": "GitHub / SDK ↗", "footer.github": "GitHub 官方倉庫 ↗",
     "wallet.connect": "連接錢包", "wallet.connected": "錢包已連接：{address}", "wallet.missing": "找不到 MetaMask。請先安裝相容的錢包擴充功能。", "network.readOnly": "BSC · 唯讀", "network.connected": "BSC · 已連接",
     "hero.live": "已上線 BNB Smart Chain", "hero.title1": "驅動每一款遊戲", "hero.title2": "價值鏈上自動分配", "hero.body": "PLUG 是專為 AI 遊戲與獨立開發者打造的固定供應遊戲點數。玩家用 USDT 直接取得點數，消費時由 Gateway 自動完成創作者、平台與銷毀分配。", "hero.getPlug": "取得 PLUG", "hero.addWallet": "＋ 加入 MetaMask", "hero.aiSpec": "AI 規格", "hero.supply": "固定供應 1,000,000,000 PLUG · 0% 轉帳稅 · 18 位小數",
     "telemetry.eyebrow": "資產遙測", "telemetry.title": "即時資產儀表板", "telemetry.myUsdt": "我的 USDT", "telemetry.myPlug": "我的 PLUG", "telemetry.inventory": "Vendor 可售庫存", "telemetry.rate": "鏈上即時匯率", "telemetry.disclaimer": "參考匯率不是法幣錨定或贖回承諾；交易前一律以鏈上 rate() 為準。", "telemetry.swapTitle": "創作者變現", "telemetry.swapStatus": "PancakeSwap V2 流動性池已上線（初始比例 1 PLUG = 0.1 USDT）。", "telemetry.swapButton": "在 PancakeSwap 兌換／變現 PLUG ↗",
@@ -65,7 +65,7 @@ const TRANSLATIONS = {
 
 TRANSLATIONS["zh-Hans"] = Object.freeze({
   ...TRANSLATIONS["zh-Hant"],
-  "meta.description": "PlugPoint Protocol — BNB Smart Chain 上的零交易税游戏点数、直售机与自动分润网关。", "nav.aria": "主要导航", "nav.buy": "购买点数", "nav.gacha": "赛博扭蛋", "nav.developers": "开发者", "nav.whitepaper": "白皮书",
+  "meta.description": "PlugPoint Protocol — BNB Smart Chain 上的零交易税游戏点数、直售机与自动分润网关。", "nav.aria": "主要导航", "nav.buy": "购买点数", "nav.gacha": "赛博扭蛋", "nav.developers": "开发者", "nav.whitepaper": "白皮书", "developer.github": "GitHub / SDK ↗", "footer.github": "GitHub 官方仓库 ↗",
   "wallet.connect": "连接钱包", "wallet.connected": "钱包已连接：{address}", "wallet.missing": "未找到 MetaMask。请先安装兼容的钱包扩展程序。", "network.readOnly": "BSC · 只读", "network.connected": "BSC · 已连接",
   "hero.live": "已上线 BNB Smart Chain", "hero.title1": "驱动每一款游戏", "hero.title2": "价值链上自动分配", "hero.body": "PLUG 是专为 AI 游戏与独立开发者打造的固定供应游戏点数。玩家用 USDT 直接取得点数，消费时由 Gateway 自动完成创作者、平台与销毁分配。", "hero.getPlug": "取得 PLUG", "hero.addWallet": "＋ 加入 MetaMask", "hero.aiSpec": "AI 规格", "hero.supply": "固定供应 1,000,000,000 PLUG · 0% 转账税 · 18 位小数",
   "telemetry.eyebrow": "资产遥测", "telemetry.title": "实时资产仪表板", "telemetry.myUsdt": "我的 USDT", "telemetry.myPlug": "我的 PLUG", "telemetry.inventory": "Vendor 可售库存", "telemetry.rate": "链上实时汇率", "telemetry.disclaimer": "参考汇率不是法币锚定或赎回承诺；交易前一律以链上 rate() 为准。", "telemetry.swapTitle": "创作者变现", "telemetry.swapStatus": "PancakeSwap V2 流动性池已上线（初始比例 1 PLUG = 0.1 USDT）。", "telemetry.swapButton": "在 PancakeSwap 兑换／变现 PLUG ↗",
