@@ -1,0 +1,29 @@
+# Secrets and local credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+
+# Dependencies and generated build output
+node_modules/
+artifacts/
+cache/
+coverage/
+typechain-types/
+*.log
+
+# Local deployment state and security operations
+.wrangler/
+security-build/
+security-reports/
+plugpoint-security-worker/
+scripts/configure-cloudflare-security.mjs
+plugpoint-web/_headers
+
+# Operator-only financial console (kept locally and deployed separately)
+plugpoint-web/finance.html
+plugpoint-web/finance.js

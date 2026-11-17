@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050a12" />
+    <meta name="description" content="PlugPoint Protocol — zero-tax game points, direct sales, and automatic revenue sharing on BNB Smart Chain." />
+    <meta property="og:title" content="PlugPoint Protocol" />
+    <meta property="og:description" content="Buy points. Power games. Split value on-chain." />
+    <meta property="og:image" content="https://plugpoint.cc/logo.png" />
+    <title>PlugPoint Protocol — Power Every Game</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="stylesheet" href="/styles.css?v=20261118-liquidity1" />
+  </head>
+  <body class="min-h-screen text-ink antialiased selection:bg-cyan/30 selection:text-white">
+    <header class="sticky top-0 z-40 border-b border-white/10 bg-void/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8" aria-label="Primary navigation" data-i18n-aria-label="nav.aria">
+        <a href="#top" class="flex min-w-0 items-center gap-3">
+          <img src="/logo.svg" alt="PlugPoint" class="h-10 w-10 shrink-0" />
+          <span class="truncate font-display text-sm tracking-[.16em] text-white sm:text-base">PLUGPOINT</span>
+        </a>
+        <div class="hidden items-center gap-6 text-xs font-bold uppercase tracking-[.15em] text-slate-400 md:flex">
+          <a class="hover:text-cyan" href="#buy" data-i18n="nav.buy">Buy points</a>
+          <a class="hover:text-cyan" href="#gacha" data-i18n="nav.gacha">Cyber Gacha</a>
+          <a class="hover:text-cyan" href="#developers" data-i18n="nav.developers">Developers</a>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/whitepaper.html" class="btn-quiet rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-wider sm:text-xs"><span class="sm:hidden">WP</span><span class="hidden sm:inline" data-i18n="nav.whitepaper">Whitepaper</span></a>
+          <span id="networkPill" class="hidden rounded-full border border-white/10 px-3 py-2 font-mono text-[10px] text-slate-400 sm:inline-flex" data-i18n="network.readOnly">BSC · READ ONLY</span>
+          <button id="walletButton" class="btn-primary rounded-lg px-4 py-2.5 text-xs font-black uppercase tracking-wider" type="button">
+            <span id="walletLabel" data-i18n="wallet.connect">Connect wallet</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top" class="relative z-10">
+      <section class="mx-auto grid max-w-7xl gap-10 px-4 pb-16 pt-16 sm:px-6 lg:grid-cols-[1.08fr_.92fr] lg:px-8 lg:pb-24 lg:pt-24">
+        <div class="flex flex-col justify-center">
+          <div class="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-cyan/20 bg-cyan/5 px-3 py-2 font-mono text-[10px] uppercase tracking-[.18em] text-cyan">
+            <span class="h-1.5 w-1.5 rounded-full bg-cyan shadow-[0_0_12px_#20dff5]"></span>
+            <span data-i18n="hero.live">Live on BNB Smart Chain</span>
+          </div>
+          <h1 class="max-w-4xl font-display text-5xl uppercase leading-[.94] tracking-[-.04em] text-white sm:text-6xl lg:text-7xl">
+            <span data-i18n="hero.title1">Power every game.</span><br /><span class="text-gradient" data-i18n="hero.title2">Split value on-chain.</span>
+          </h1>
+          <p class="mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+            <span data-i18n="hero.body">PLUG is a fixed-supply game point built for AI games and independent developers. Players buy points directly with USDT, while the Gateway automatically splits every spend among the creator, platform, and token burn.</span>
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#buy" class="btn-primary rounded-xl px-6 py-3.5 text-sm font-black uppercase tracking-wider" data-i18n="hero.getPlug">Get PLUG</a>
+            <button id="addTokenButton" class="btn-secondary rounded-xl px-6 py-3.5 text-sm font-black uppercase tracking-wider" type="button" data-i18n="hero.addWallet">＋ Add to MetaMask</button>
+            <a href="/llms.txt" class="btn-quiet rounded-xl px-6 py-3.5 text-sm font-black uppercase tracking-wider" data-i18n="hero.aiSpec">AI specification</a>
+          </div>
+          <p class="mt-5 font-mono text-xs text-slate-500" data-i18n="hero.supply">Fixed supply: 1,000,000,000 PLUG · 0% transfer tax · 18 decimals</p>
+        </div>
+
+        <div class="panel panel-gold tech-cut scanline relative p-5 sm:p-7">
+          <div class="flex items-center justify-between border-b border-white/10 pb-5">
+            <div>
+              <p class="font-mono text-[10px] uppercase tracking-[.2em] text-gold" data-i18n="telemetry.eyebrow">Asset telemetry</p>
+              <h2 class="mt-2 text-xl font-black text-white" data-i18n="telemetry.title">Live asset dashboard</h2>
+            </div>
+            <button id="refreshButton" type="button" class="btn-quiet rounded-lg px-3 py-2 text-xs" data-i18n="common.refresh">Refresh</button>
+          </div>
+          <div class="mt-5 grid grid-cols-2 gap-3">
+            <article class="rounded-xl border border-white/10 bg-black/20 p-4">
+              <p class="text-xs text-slate-500" data-i18n="telemetry.myUsdt">My USDT</p>
+              <p id="usdtBalance" class="mt-2 font-mono text-xl font-bold text-white">—</p>
+            </article>
+            <article class="rounded-xl border border-white/10 bg-black/20 p-4">
+              <p class="text-xs text-slate-500" data-i18n="telemetry.myPlug">My PLUG</p>
+              <p id="plugBalance" class="mt-2 font-mono text-xl font-bold text-gold">—</p>
+            </article>
+            <article class="col-span-2 rounded-xl border border-cyan/15 bg-cyan/[.04] p-4">
+              <div class="flex items-end justify-between gap-4">
+                <div>
+                  <p class="text-xs text-slate-500" data-i18n="telemetry.inventory">Vendor inventory</p>
+                  <p id="vendorInventory" class="mt-2 font-mono text-2xl font-bold text-cyan" data-i18n="common.loading">Loading…</p>
+                </div>
+                <span class="mb-1 text-xs text-slate-500">PLUG</span>
+              </div>
+            </article>
+            <article class="col-span-2 flex items-center justify-between rounded-xl border border-white/10 bg-black/20 p-4">
+              <span class="text-sm text-slate-400" data-i18n="telemetry.rate">Live on-chain rate</span>
+              <strong id="exchangeRate" class="font-mono text-sm text-white">1 USDT = — PLUG</strong>
+            </article>
+          </div>
+          <div class="mt-5 flex items-center gap-3 rounded-lg border border-amber-300/15 bg-amber-300/[.04] p-3 text-xs leading-5 text-amber-100/70">
+            <span aria-hidden="true">◆</span>
+            <span data-i18n="telemetry.disclaimer">The displayed rate is not a fiat peg or redemption promise. Always verify the on-chain rate() before transacting.</span>
+          </div>
+          <div class="mt-3 flex flex-col gap-3 rounded-xl border border-cyan/15 bg-cyan/[.04] p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-sm font-bold text-white" data-i18n="telemetry.swapTitle">Creator cash-out</p>
+              <p class="mt-1 text-xs leading-5 text-slate-400" data-i18n="telemetry.swapStatus">PancakeSwap V2 liquidity pool is live (1 PLUG = 0.1 USDT initial ratio).</p>
+            </div>
+            <a
+              href="https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955&amp;inputCurrency=0x39801De9D63234D3Cb1344b9df46727001085F4F"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-secondary shrink-0 rounded-lg px-4 py-3 text-center text-xs font-black uppercase tracking-wider"
+              data-i18n="telemetry.swapButton"
+            >Swap / cash out PLUG ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="buy" class="border-y border-white/10 bg-black/15 py-16 sm:py-20">
+        <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[.82fr_1.18fr] lg:px-8">
+          <div>
+            <p class="font-mono text-xs uppercase tracking-[.22em] text-gold" data-i18n="buy.eyebrow">01 · Point terminal</p>
+            <h2 class="mt-4 font-display text-4xl uppercase text-white sm:text-5xl"><span data-i18n="buy.title1">Buy PLUG points</span><br /><span data-i18n="buy.title2">directly with USDT</span></h2>
+            <p class="mt-5 max-w-lg leading-7 text-slate-400" data-i18n="buy.body">No DEX and no slippage. USDT goes directly to the platform treasury, while PLUG is delivered from the pre-funded Vendor inventory to your wallet.</p>
+            <div class="mt-8 grid max-w-md grid-cols-3 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 text-center text-xs">
+              <div class="bg-void p-3"><strong class="block text-gold">1</strong><span class="text-slate-500" data-i18n="buy.stepApprove">Approve</span></div>
+              <div class="bg-void p-3"><strong class="block text-gold">2</strong><span class="text-slate-500" data-i18n="buy.stepPurchase">Purchase</span></div>
+              <div class="bg-void p-3"><strong class="block text-gold">3</strong><span class="text-slate-500" data-i18n="buy.stepConfirm">Confirm</span></div>
+            </div>
+          </div>
+
+          <form id="buyForm" class="panel panel-gold tech-cut glow-gold p-5 sm:p-8">
+            <label for="usdtInput" class="text-sm font-bold text-white" data-i18n="buy.amount">Choose an amount</label>
+            <div class="mt-4 grid grid-cols-4 gap-2" aria-label="USDT quick amounts" data-i18n-aria-label="buy.quickAria">
+              <button data-usdt="1" class="btn-quiet rounded-lg py-3 font-mono text-sm" type="button">1</button>
+              <button data-usdt="5" class="btn-quiet rounded-lg py-3 font-mono text-sm" type="button">5</button>
+              <button data-usdt="10" class="btn-quiet rounded-lg py-3 font-mono text-sm" type="button">10</button>
+              <button data-usdt="50" class="btn-quiet rounded-lg py-3 font-mono text-sm" type="button">50</button>
+            </div>
+            <div class="mt-4 flex items-center rounded-xl border border-white/15 bg-black/30 focus-within:border-gold/60">
+              <input id="usdtInput" type="number" min="0.000001" step="any" inputmode="decimal" value="10" class="w-full bg-transparent px-4 py-4 font-mono text-2xl text-white outline-none" aria-describedby="buyQuote" />
+              <span class="pr-4 font-mono text-sm text-slate-400">USDT</span>
+            </div>
+            <div id="buyQuote" class="mt-5 flex items-center justify-between rounded-xl border border-cyan/15 bg-cyan/[.04] p-4">
+              <span class="text-sm text-slate-400" data-i18n="buy.receive">You receive</span>
+              <strong id="plugQuote" class="font-mono text-xl text-cyan">— PLUG</strong>
+            </div>
+            <button id="buyButton" type="submit" class="btn-primary mt-5 w-full rounded-xl py-4 text-sm font-black uppercase tracking-[.12em]" data-i18n="buy.button">Buy PLUG now</button>
+            <p class="mt-4 text-center text-xs leading-5 text-slate-500" data-i18n="buy.note">MetaMask will ask you to sign. If your allowance is already sufficient, the purchase proceeds immediately.</p>
+          </form>
+        </div>
+      </section>
+
+      <section id="gacha" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div class="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div>
+            <p class="font-mono text-xs uppercase tracking-[.22em] text-cyan" data-i18n="gacha.eyebrow">02 · Demo game · App ID 1</p>
+            <h2 class="mt-4 font-display text-4xl uppercase text-white sm:text-5xl">Cyber Gacha</h2>
+          </div>
+          <p class="max-w-xl text-sm leading-6 text-slate-400" data-i18n="gacha.body">Real PLUG spending with an on-chain 80/15/5 split. Prizes and random results are local demo collectibles with no redemption value and are not verifiable on-chain randomness.</p>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-[1.06fr_.94fr]">
+          <article class="panel tech-cut glow-cyan min-h-[520px] p-5 sm:p-8">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[.18em] text-slate-500" data-i18n="gacha.capsule">Quantum capsule</p>
+                <p id="gachaStatus" class="mt-2 text-sm text-cyan" data-i18n="gacha.syncing">Syncing App ID 1…</p>
+              </div>
+              <span class="rounded-full border border-cyan/20 bg-cyan/5 px-3 py-1 font-mono text-[10px] text-cyan" data-i18n="gacha.cost">ON-CHAIN COST</span>
+            </div>
+            <div class="flex min-h-[250px] items-center justify-center py-8">
+              <div class="relative">
+                <div class="absolute inset-[-36px] rounded-full border border-cyan/10"></div>
+                <div class="absolute inset-[-18px] rounded-full border border-dashed border-gold/20"></div>
+                <div id="gachaOrb" class="orb h-36 w-36 rounded-full"></div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <button id="singleDrawButton" type="button" class="btn-secondary rounded-xl p-4 text-left" disabled>
+                <span class="block text-xs text-slate-400" data-i18n="gacha.single">Single draw</span>
+                <strong class="mt-1 block text-lg text-white">1 PLUG</strong>
+              </button>
+              <button id="fiveDrawButton" type="button" class="btn-primary rounded-xl p-4 text-left" disabled>
+                <span class="block text-xs text-slate-700" data-i18n="gacha.five">Five draws</span>
+                <strong class="mt-1 block text-lg">5 PLUG</strong>
+              </button>
+            </div>
+            <div id="distributionPanel" class="mt-5 hidden rounded-xl border border-white/10 bg-black/25 p-4">
+              <p class="mb-3 text-xs font-bold uppercase tracking-wider text-slate-400" data-i18n="gacha.split">This on-chain split</p>
+              <div class="grid grid-cols-3 gap-3 text-center text-xs">
+                <div><span class="block text-slate-500" data-i18n="gacha.creator">Creator</span><strong id="creatorShare" class="mt-1 block font-mono text-white">—</strong></div>
+                <div><span class="block text-slate-500" data-i18n="gacha.platform">Platform</span><strong id="platformShare" class="mt-1 block font-mono text-gold">—</strong></div>
+                <div><span class="block text-slate-500" data-i18n="gacha.burn">Burn</span><strong id="burnedShare" class="mt-1 block font-mono text-cyan">—</strong></div>
+              </div>
+            </div>
+          </article>
+
+          <aside class="panel p-5 sm:p-7">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-mono text-[10px] uppercase tracking-[.2em] text-gold" data-i18n="loot.eyebrow">Local vault</p>
+                <h3 class="mt-2 text-xl font-black text-white" data-i18n="loot.title">Player inventory</h3>
+              </div>
+              <span id="lootCount" class="rounded-full bg-white/5 px-3 py-1 font-mono text-xs text-slate-400">0 ITEMS</span>
+            </div>
+            <div id="lootGrid" class="mt-5 grid max-h-[420px] grid-cols-2 gap-3 overflow-y-auto pr-1 log-scroll">
+              <div class="col-span-2 rounded-xl border border-dashed border-white/10 p-8 text-center text-sm text-slate-500" data-i18n="loot.emptyGuest">Connect your wallet and complete a draw. Your loot will be saved in this browser.</div>
+            </div>
+            <div class="mt-5 grid grid-cols-4 gap-2 text-center font-mono text-[10px]">
+              <span class="rounded border border-fuchsia-400/30 p-2 text-fuchsia-300">SSR 5%</span>
+              <span class="rounded border border-amber-300/30 p-2 text-amber-200">SR 20%</span>
+              <span class="rounded border border-cyan/30 p-2 text-cyan">R 35%</span>
+              <span class="rounded border border-slate-500/30 p-2 text-slate-400">N 40%</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="developers" class="border-y border-white/10 bg-black/15 py-16 sm:py-24">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid gap-8 lg:grid-cols-2">
+            <article class="panel p-5 sm:p-7">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cyan" data-i18n="registry.eyebrow">Gateway registry</p>
+                  <h2 class="mt-2 text-2xl font-black text-white" data-i18n="registry.title">Global game registry</h2>
+                </div>
+                <span id="registryStatusBadge" class="rounded-full border border-white/10 px-3 py-1 font-mono text-[10px] text-slate-400">SYNCING</span>
+              </div>
+
+              <div class="mt-6 grid gap-3 sm:grid-cols-2">
+                <div class="rounded-xl border border-cyan/15 bg-cyan/[.035] p-4">
+                  <p class="text-xs text-slate-500" data-i18n="registry.count">Games registered network-wide</p>
+                  <p class="mt-2"><span id="registeredGameCount" class="font-mono text-2xl font-black text-white">—</span><span class="ml-2 text-xs text-slate-500" data-i18n="registry.gamesUnit">games</span></p>
+                </div>
+                <div class="rounded-xl border border-gold/20 bg-gold/[.04] p-4">
+                  <p class="text-xs text-slate-500" data-i18n="registry.next">Next available number</p>
+                  <p id="nextAppIdLabel" class="mt-2 font-mono text-2xl font-black text-gold">App ID #—</p>
+                </div>
+              </div>
+
+              <form id="appLookupForm" class="mt-6 flex flex-col gap-2 sm:flex-row sm:items-end">
+                <div class="min-w-0 flex-1">
+                  <label for="appIdQueryInput" class="text-xs text-slate-400" data-i18n="registry.lookup">Look up any game App ID</label>
+                  <input id="appIdQueryInput" type="number" inputmode="numeric" min="1" step="1" value="1" required class="mt-1 w-full rounded-lg border border-white/10 bg-black/25 px-3 py-3 font-mono text-xs text-white outline-none focus:border-cyan/50" />
+                </div>
+                <button id="appIdQueryButton" type="submit" class="btn-secondary rounded-lg px-5 py-3 text-xs font-black uppercase tracking-wider" data-i18n="common.search">Search</button>
+              </form>
+
+              <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+                <h3 id="queriedGameTitle" class="text-sm font-black text-white">App ID #1 live data</h3>
+                <span id="gameStatusBadge" class="rounded-full border border-white/10 px-3 py-1 font-mono text-[10px] text-slate-400">SYNCING</span>
+              </div>
+              <dl class="mt-4 space-y-4 text-sm">
+                <div class="grid gap-1 border-b border-white/10 pb-3 sm:grid-cols-[150px_1fr]"><dt class="text-slate-500" data-i18n="registry.owner">Registrant</dt><dd id="gameOwner" class="break-all font-mono text-xs text-slate-300">—</dd></div>
+                <div class="grid gap-1 border-b border-white/10 pb-3 sm:grid-cols-[150px_1fr]"><dt class="text-slate-500" data-i18n="registry.payout">Payout address</dt><dd id="gamePayout" class="break-all font-mono text-xs text-slate-300">—</dd></div>
+                <div class="grid gap-1 border-b border-white/10 pb-3 sm:grid-cols-[150px_1fr]"><dt class="text-slate-500">Metadata</dt><dd id="gameMetadata" class="break-all font-mono text-xs text-slate-300">—</dd></div>
+                <div class="grid gap-1 border-b border-white/10 pb-3 sm:grid-cols-[150px_1fr]"><dt class="text-slate-500" data-i18n="registry.active">Status</dt><dd id="gameActive" class="font-mono text-xs text-slate-300">—</dd></div>
+                <div class="grid gap-1 sm:grid-cols-[150px_1fr]"><dt class="text-slate-500" data-i18n="registry.volume">Total volume</dt><dd id="gameVolume" class="font-mono text-white">— PLUG</dd></div>
+              </dl>
+
+              <div id="registrationPanel" class="mt-6 rounded-xl border border-gold/20 bg-gold/[.04] p-4 sm:p-5">
+                <p class="text-sm font-bold text-gold" data-i18n="register.title">Register a new game (get a new App ID)</p>
+                <p class="mt-2 text-xs leading-5 text-slate-400" data-i18n="register.body">This desk is always open. Any developer can claim the next on-chain number. Verify the payout address and Metadata URI; only the registrant can update the game later.</p>
+                <form id="registerForm" class="mt-4 space-y-3">
+                  <div>
+                    <label for="payoutInput" class="text-xs text-slate-400" data-i18n="register.payout">Creator payout address</label>
+                    <input id="payoutInput" required autocomplete="off" class="mt-1 w-full rounded-lg border border-white/10 bg-black/25 px-3 py-3 font-mono text-xs text-white outline-none focus:border-gold/50" placeholder="Connect a wallet to fill this automatically, or enter 0x…" data-i18n-placeholder="register.payoutPlaceholder" />
+                  </div>
+                  <div>
+                    <label for="metadataInput" class="text-xs text-slate-400" data-i18n="register.metadata">Game Metadata URI</label>
+                    <input id="metadataInput" required type="url" inputmode="url" autocomplete="url" class="mt-1 w-full rounded-lg border border-white/10 bg-black/25 px-3 py-3 font-mono text-xs text-white outline-none focus:border-gold/50" placeholder="https://yourgame.com/meta.json" />
+                  </div>
+                  <button id="registerButton" type="submit" class="btn-primary w-full rounded-lg px-3 py-3 text-xs font-black uppercase tracking-wider">Register now and claim App ID #—</button>
+                </form>
+
+                <div id="registrationResult" class="mt-4 hidden rounded-xl border border-emerald-400/25 bg-emerald-400/[.06] p-4" aria-live="polite">
+                  <p class="font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300" data-i18n="register.confirmationLabel">Registration confirmed</p>
+                  <p class="mt-2 text-sm text-slate-300" data-i18n="register.confirmed">Your game received</p>
+                  <p id="registeredAppId" class="mt-1 font-mono text-3xl font-black text-white">App ID #—</p>
+                  <p id="registrationSummary" class="mt-2 break-all text-xs leading-5 text-slate-400"></p>
+                  <a id="registrationTxLink" href="#" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex text-xs font-bold text-cyan underline decoration-dotted" data-i18n="register.viewTx">View transaction on BscScan ↗</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel panel-gold flex flex-col p-5 sm:p-7">
+              <p class="font-mono text-[10px] uppercase tracking-[.2em] text-gold" data-i18n="ai.eyebrow">AI integration port</p>
+              <h2 class="mt-2 text-2xl font-black text-white" data-i18n="ai.title">Hand the protocol to your AI</h2>
+              <p class="mt-4 leading-7 text-slate-400" data-i18n="ai.body">Give the public specification endpoint to any AI coding assistant to obtain mainnet addresses, minimal ABIs, the approval flow, and backend event-deduplication rules.</p>
+              <div id="aiPromptText" class="mt-5 rounded-xl border border-white/10 bg-black/30 p-4 font-mono text-sm leading-6 text-cyan" data-i18n="ai.prompt">
+                Read https://plugpoint.cc/llms.txt and integrate PLUG purchases and Gateway spending into my game. Verify PointsSpent events according to the specification.
+              </div>
+              <button id="copyPromptButton" type="button" class="btn-secondary mt-4 rounded-xl py-3 text-xs font-black uppercase tracking-wider" data-i18n="ai.copy">Copy AI integration prompt</button>
+              <p id="copyStatus" class="mt-3 min-h-5 text-center text-xs text-slate-500" aria-live="polite"></p>
+              <div class="mt-auto grid grid-cols-2 gap-3 pt-6">
+                <a href="/llms.txt" class="btn-quiet rounded-lg p-3 text-center text-xs">llms.txt</a>
+                <a href="/contracts.json" class="btn-quiet rounded-lg p-3 text-center text-xs">contracts.json</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="panel overflow-hidden">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
+            <div class="flex items-center gap-3">
+              <span class="h-2 w-2 rounded-full bg-cyan shadow-[0_0_10px_#20dff5]"></span>
+              <h2 class="font-mono text-xs uppercase tracking-[.18em] text-white" data-i18n="log.title">Live transaction log</h2>
+            </div>
+            <button id="clearLogButton" type="button" class="text-xs text-slate-500 hover:text-white" data-i18n="common.clear">Clear</button>
+          </div>
+          <div id="txLog" class="log-scroll max-h-72 min-h-28 overflow-y-auto p-4 font-mono text-xs leading-6" role="log" aria-live="polite" aria-relevant="additions">
+            <div class="text-slate-500" data-i18n="log.connecting">[SYSTEM] Connecting to the BSC Mainnet read-only endpoint…</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="relative z-10 border-t border-white/10 bg-black/25">
+      <div class="mx-auto flex max-w-7xl flex-col justify-between gap-5 px-4 py-8 text-xs text-slate-500 sm:px-6 md:flex-row md:items-center lg:px-8">
+        <div class="flex max-w-2xl items-start gap-3 leading-5"><img src="/logo.svg" alt="" class="mt-0.5 h-8 w-8 shrink-0" /><span data-i18n="footer.copyright">© 2026 PlugPoint Protocol. All rights reserved. Integration SDK &amp; smart contract interfaces are provided under the MIT License.</span></div>
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <a class="hover:text-cyan" href="mailto:admin@plugpoint.cc">admin@plugpoint.cc</a>
+          <a class="hover:text-gold" href="/whitepaper.html" data-i18n="nav.whitepaper">Whitepaper</a>
+          <a class="hover:text-cyan" href="https://bscscan.com/token/0x39801De9D63234D3Cb1344b9df46727001085F4F" target="_blank" rel="noopener noreferrer">PLUG on BscScan ↗</a>
+          <a class="hover:text-cyan" href="https://bscscan.com/address/0x0ADD4F526A4e512EAfF46208B45FF298A78a8c09#code" target="_blank" rel="noopener noreferrer">Gateway ↗</a>
+          <label for="languageSelect" class="sr-only" data-i18n="language.label">Language</label>
+          <select id="languageSelect" class="rounded-lg border border-white/10 bg-void px-3 py-2 text-xs text-slate-300 outline-none hover:border-cyan/30 focus:border-cyan/50" aria-label="Language" data-i18n-aria-label="language.label">
+            <option value="en">English</option>
+            <option value="zh-Hant">繁體中文</option>
+            <option value="zh-Hans">简体中文</option>
+          </select>
+        </div>
+      </div>
+    </footer>
+
+    <script defer src="/vendor/ethers.umd.min.js"></script>
+    <script defer src="/app.js?v=20261118-legal1"></script>
+  </body>
+</html>

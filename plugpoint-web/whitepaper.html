@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050a12" />
+    <meta name="description" content="PlugPoint Protocol Whitepaper v1.0 — architecture, token economics, verified BSC contracts, and the three-minute game developer quickstart." />
+    <meta property="og:title" content="PlugPoint Protocol Whitepaper v1.0" />
+    <meta property="og:description" content="Verified mainnet architecture, 80/15/5 settlement, liquidity, security, and developer integration." />
+    <meta property="og:image" content="https://plugpoint.cc/logo.png" />
+    <title>PlugPoint Protocol — Whitepaper v1.0</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="stylesheet" href="/styles.css?v=20261118-whitepaper1" />
+  </head>
+  <body class="min-h-screen text-ink antialiased selection:bg-cyan/30 selection:text-white">
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-void/90 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8" aria-label="Whitepaper navigation" data-wp-i18n-aria="nav.aria">
+        <a href="/" class="flex min-w-0 items-center gap-3">
+          <img src="/logo.svg" alt="PlugPoint" class="h-10 w-10 shrink-0" />
+          <span class="truncate font-display text-sm tracking-[.16em] text-white sm:text-base">PLUGPOINT</span>
+        </a>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <a href="/" class="btn-quiet rounded-lg px-3 py-2 text-xs font-bold uppercase tracking-wider" data-wp-i18n="nav.home">Home</a>
+          <span class="hidden rounded-full border border-gold/20 bg-gold/5 px-3 py-2 font-mono text-[10px] uppercase tracking-[.16em] text-gold sm:inline-flex">WHITEPAPER v1.0</span>
+          <label for="whitepaperLanguage" class="sr-only" data-wp-i18n="language.label">Language</label>
+          <select id="whitepaperLanguage" class="rounded-lg border border-white/10 bg-void px-3 py-2 text-xs text-slate-300 outline-none hover:border-cyan/30 focus:border-cyan/50" aria-label="Language" data-wp-i18n-aria="language.label">
+            <option value="en">English</option>
+            <option value="zh-Hant">繁體中文</option>
+            <option value="zh-Hans">简体中文</option>
+          </select>
+        </div>
+      </nav>
+    </header>
+
+    <main class="relative z-10">
+      <section class="border-b border-white/10">
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+          <div class="max-w-4xl">
+            <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan/20 bg-cyan/5 px-3 py-2 font-mono text-[10px] uppercase tracking-[.18em] text-cyan">
+              <span class="h-1.5 w-1.5 rounded-full bg-cyan shadow-[0_0_12px_#20dff5]"></span>
+              <span data-wp-i18n="hero.verified">Verified on BNB Smart Chain Mainnet</span>
+            </div>
+            <h1 class="font-display text-5xl uppercase leading-[.94] tracking-[-.04em] text-white sm:text-6xl lg:text-7xl">
+              <span data-wp-i18n="hero.title1">PlugPoint Protocol</span><br />
+              <span class="text-gradient" data-wp-i18n="hero.title2">Whitepaper v1.0</span>
+            </h1>
+            <p class="mt-7 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg" data-wp-i18n="hero.body">An open game-point and atomic revenue-sharing gateway for AI-generated games, independent studios, and community servers.</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#quickstart" class="btn-primary rounded-xl px-6 py-3.5 text-sm font-black uppercase tracking-wider" data-wp-i18n="hero.quickstart">3-minute quickstart</a>
+              <a href="https://bscscan.com/token/0x39801De9D63234D3Cb1344b9df46727001085F4F" target="_blank" rel="noopener noreferrer" class="btn-secondary rounded-xl px-6 py-3.5 text-sm font-black uppercase tracking-wider" data-wp-i18n="hero.verify">Verify PLUG on BscScan ↗</a>
+            </div>
+            <p class="mt-6 font-mono text-xs leading-6 text-slate-500" data-wp-i18n="hero.snapshot">Mainnet specification · Chain ID 56 · Fixed initial supply 1,000,000,000 PLUG · Published 18 November 2026</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[250px_minmax(0,1fr)] lg:px-8 lg:py-16">
+        <aside class="lg:sticky lg:top-24 lg:h-fit">
+          <div class="panel p-5">
+            <p class="font-mono text-[10px] uppercase tracking-[.2em] text-gold" data-wp-i18n="toc.label">Contents</p>
+            <nav class="mt-4 flex flex-col gap-1 text-sm text-slate-400" aria-label="Table of contents" data-wp-i18n-aria="toc.aria">
+              <a class="rounded-lg px-3 py-2 hover:bg-white/5 hover:text-cyan" href="#vision" data-wp-i18n="toc.vision">1. Vision and problem</a>
+              <a class="rounded-lg px-3 py-2 hover:bg-white/5 hover:text-cyan" href="#architecture" data-wp-i18n="toc.architecture">2. Dual-channel loop</a>
+              <a class="rounded-lg px-3 py-2 hover:bg-white/5 hover:text-cyan" href="#economics" data-wp-i18n="toc.economics">3. Token economics</a>
+              <a class="rounded-lg px-3 py-2 hover:bg-white/5 hover:text-cyan" href="#contracts" data-wp-i18n="toc.contracts">4. Contracts and security</a>
+              <a class="rounded-lg px-3 py-2 hover:bg-white/5 hover:text-cyan" href="#quickstart" data-wp-i18n="toc.quickstart">5. 3-minute quickstart</a>
+              <a class="rounded-lg px-3 py-2 hover:bg-white/5 hover:text-cyan" href="#risks" data-wp-i18n="toc.risks">6. Risks and disclaimer</a>
+            </nav>
+            <div class="mt-5 border-t border-white/10 pt-5 text-xs leading-6 text-slate-500">
+              <p data-wp-i18n="toc.machine">Machine-readable sources</p>
+              <a class="block text-cyan hover:text-white" href="/contracts.json">contracts.json</a>
+              <a class="block text-cyan hover:text-white" href="/llms.txt">llms.txt</a>
+            </div>
+          </div>
+        </aside>
+
+        <article class="min-w-0 space-y-10">
+          <section id="vision" class="panel scroll-mt-24 p-6 sm:p-8">
+            <p class="font-mono text-xs uppercase tracking-[.2em] text-gold" data-wp-i18n="chapter.1">Chapter 1</p>
+            <h2 class="mt-3 font-display text-3xl uppercase text-white sm:text-4xl" data-wp-i18n="vision.title">Vision and the problem PlugPoint solves</h2>
+            <p class="mt-6 leading-8 text-slate-300" data-wp-i18n="vision.p1">Independent games, AI-built experiences, and community servers often face the same bottleneck: payment integration is expensive, platform rules are fragmented, and settlement can take weeks. Conventional distribution channels may charge 30%–50% when payment, publishing, and promotion fees are combined.</p>
+            <p class="mt-4 leading-8 text-slate-400" data-wp-i18n="vision.p2">PlugPoint separates the game economy from any single storefront. Developers register a game permissionlessly, receive an on-chain App ID, accept one interoperable utility point, and settle each purchase directly to the configured creator wallet. There is no internal account balance for the platform to hold and no manual payout queue.</p>
+            <div class="mt-7 grid gap-4 sm:grid-cols-3">
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5"><strong class="text-gold" data-wp-i18n="vision.card1Title">Permissionless</strong><p class="mt-2 text-sm leading-6 text-slate-400" data-wp-i18n="vision.card1Body">Any wallet can register a game without an approval committee.</p></div>
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5"><strong class="text-cyan" data-wp-i18n="vision.card2Title">Atomic</strong><p class="mt-2 text-sm leading-6 text-slate-400" data-wp-i18n="vision.card2Body">Creator, treasury, and burn settlement occur in one confirmed transaction.</p></div>
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5"><strong class="text-mint" data-wp-i18n="vision.card3Title">Auditable</strong><p class="mt-2 text-sm leading-6 text-slate-400" data-wp-i18n="vision.card3Body">Supply, game volume, events, reserves, and contract code are public on BSC.</p></div>
+            </div>
+          </section>
+
+          <section id="architecture" class="panel scroll-mt-24 p-6 sm:p-8">
+            <p class="font-mono text-xs uppercase tracking-[.2em] text-gold" data-wp-i18n="chapter.2">Chapter 2</p>
+            <h2 class="mt-3 font-display text-3xl uppercase text-white sm:text-4xl" data-wp-i18n="architecture.title">Dual-channel capital loop</h2>
+            <p class="mt-6 leading-8 text-slate-300" data-wp-i18n="architecture.p1">PlugPoint uses two complementary channels. The official Vendor gives players deterministic inventory-backed access to PLUG at the current on-chain rate. The public PancakeSwap V2 pair gives creators and holders an open market exit to BSC USDT.</p>
+            <div class="mt-7 grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
+              <div class="rounded-2xl border border-gold/20 bg-gold/[.04] p-6">
+                <span class="font-mono text-[10px] uppercase tracking-[.2em] text-gold">PLAYER IN</span>
+                <h3 class="mt-3 text-xl font-black text-white" data-wp-i18n="architecture.vendorTitle">Official Vendor</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-400" data-wp-i18n="architecture.vendorBody">USDT is transferred directly to the protocol treasury while pre-funded PLUG inventory is delivered to the player. Current rate: 1 USDT = 10 PLUG.</p>
+              </div>
+              <div class="flex items-center justify-center text-2xl text-cyan">⇄</div>
+              <div class="rounded-2xl border border-cyan/20 bg-cyan/[.04] p-6">
+                <span class="font-mono text-[10px] uppercase tracking-[.2em] text-cyan">CREATOR OUT</span>
+                <h3 class="mt-3 text-xl font-black text-white" data-wp-i18n="architecture.dexTitle">PancakeSwap V2</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-400" data-wp-i18n="architecture.dexBody">Creators can swap earned PLUG against the public PLUG/USDT pool. Quotes are market-driven and subject to reserve depth, price impact, and slippage.</p>
+              </div>
+            </div>
+            <div class="mt-6 rounded-xl border border-amber-300/15 bg-amber-300/[.04] p-4 text-sm leading-7 text-amber-100/75" data-wp-i18n="architecture.note">The Vendor rate is an owner-configurable contract parameter, not a fiat peg or redemption promise. The AMM price can diverge from the Vendor reference rate.</div>
+          </section>
+
+          <section id="economics" class="panel scroll-mt-24 p-6 sm:p-8">
+            <p class="font-mono text-xs uppercase tracking-[.2em] text-gold" data-wp-i18n="chapter.3">Chapter 3</p>
+            <h2 class="mt-3 font-display text-3xl uppercase text-white sm:text-4xl" data-wp-i18n="economics.title">Token economics and 80 / 15 / 5 settlement</h2>
+            <p class="mt-6 leading-8 text-slate-300" data-wp-i18n="economics.p1">PLUG has an initial fixed supply of 1,000,000,000 tokens, 18 decimals, zero transfer tax, and no mint function. Each Gateway spend divides the exact amount atomically.</p>
+            <div class="mt-7 overflow-hidden rounded-xl border border-white/10 bg-black/30">
+              <div class="flex h-16 text-center text-xs font-black text-void sm:text-sm">
+                <div class="flex w-4/5 items-center justify-center bg-mint">80% <span class="ml-2 hidden sm:inline" data-wp-i18n="economics.creator">Creator</span></div>
+                <div class="flex w-[15%] items-center justify-center bg-gold">15%</div>
+                <div class="flex w-[5%] items-center justify-center bg-cyan">5%</div>
+              </div>
+              <div class="grid gap-px bg-white/10 sm:grid-cols-3">
+                <div class="bg-void p-5"><strong class="text-mint" data-wp-i18n="economics.creatorTitle">Creator settlement</strong><p class="mt-2 text-sm leading-6 text-slate-400" data-wp-i18n="economics.creatorBody">Sent directly to the game payout wallet. No platform custody or payout period.</p></div>
+                <div class="bg-void p-5"><strong class="text-gold" data-wp-i18n="economics.platformTitle">Protocol share</strong><p class="mt-2 text-sm leading-6 text-slate-400" data-wp-i18n="economics.platformBody">Sent to the platform treasury for operations and liquidity maintenance.</p></div>
+                <div class="bg-void p-5"><strong class="text-cyan" data-wp-i18n="economics.burnTitle">Permanent burn</strong><p class="mt-2 text-sm leading-6 text-slate-400" data-wp-i18n="economics.burnBody">Destroyed through burnFrom, reducing totalSupply permanently.</p></div>
+              </div>
+            </div>
+            <div class="mt-7 grid gap-4 sm:grid-cols-2">
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5 font-mono text-sm leading-7 text-slate-300">
+                <p>S = <span data-wp-i18n="economics.formulaSpend">player spend</span></p>
+                <p>C = S − (S × 0.15) − (S × 0.05)</p>
+                <p>P = S × 0.15</p>
+                <p>B = S × 0.05</p>
+                <p>T<sub>n</sub> = T<sub>0</sub> − ΣB</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-black/20 p-5 text-sm leading-7 text-slate-400">
+                <p data-wp-i18n="economics.math1">Creator share is computed as the exact rounding remainder, so creator + platform + burn always equals the submitted amount.</p>
+                <p class="mt-3" data-wp-i18n="economics.math2">If the burn rate remains 5%, cumulative spend can be estimated as (1,000,000,000 − totalSupply) ÷ 0.05.</p>
+              </div>
+            </div>
+            <p class="mt-5 text-sm leading-7 text-slate-400" data-wp-i18n="economics.reserve">Burn reduces outstanding token supply and therefore lowers nominal future obligations; it does not create USDT by itself. Actual cash-out capacity comes from PancakeSwap reserves and treasury policy, which must be measured separately.</p>
+          </section>
+
+          <section id="contracts" class="panel scroll-mt-24 p-6 sm:p-8">
+            <p class="font-mono text-xs uppercase tracking-[.2em] text-gold" data-wp-i18n="chapter.4">Chapter 4</p>
+            <h2 class="mt-3 font-display text-3xl uppercase text-white sm:text-4xl" data-wp-i18n="contracts.title">Mainnet contracts and security design</h2>
+            <p class="mt-6 leading-8 text-slate-300" data-wp-i18n="contracts.p1">The following addresses are the canonical BNB Smart Chain Mainnet deployment. Integrations must pin Chain ID 56 and verify events only from these contracts.</p>
+            <div class="mt-7 overflow-x-auto rounded-xl border border-white/10">
+              <table class="w-full min-w-[720px] text-left text-sm">
+                <thead class="bg-white/5 text-xs uppercase tracking-wider text-slate-500"><tr><th class="p-4" data-wp-i18n="contracts.tableRole">Role</th><th class="p-4" data-wp-i18n="contracts.tableAddress">Address</th><th class="p-4" data-wp-i18n="contracts.tableEvidence">Evidence</th></tr></thead>
+                <tbody class="divide-y divide-white/10 text-slate-300">
+                  <tr><td class="p-4">PLUG Token</td><td class="p-4 font-mono text-xs">0x39801De9D63234D3Cb1344b9df46727001085F4F</td><td class="p-4"><a class="text-cyan hover:text-white" href="https://bscscan.com/token/0x39801De9D63234D3Cb1344b9df46727001085F4F" target="_blank" rel="noopener noreferrer">BscScan ↗</a></td></tr>
+                  <tr><td class="p-4">PlugPointVendor</td><td class="p-4 font-mono text-xs">0xa5B85f726eFFc7513CA67f8984F8b3cd9C88CE70</td><td class="p-4"><a class="text-cyan hover:text-white" href="https://bscscan.com/address/0xa5B85f726eFFc7513CA67f8984F8b3cd9C88CE70#code" target="_blank" rel="noopener noreferrer">Verified code ↗</a></td></tr>
+                  <tr><td class="p-4">PlugPointGateway</td><td class="p-4 font-mono text-xs">0x0ADD4F526A4e512EAfF46208B45FF298A78a8c09</td><td class="p-4"><a class="text-cyan hover:text-white" href="https://bscscan.com/address/0x0ADD4F526A4e512EAfF46208B45FF298A78a8c09#code" target="_blank" rel="noopener noreferrer">Verified code ↗</a></td></tr>
+                  <tr><td class="p-4">BSC-USD (USDT)</td><td class="p-4 font-mono text-xs">0x55d398326f99059fF775485246999027B3197955</td><td class="p-4"><a class="text-cyan hover:text-white" href="https://bscscan.com/token/0x55d398326f99059fF775485246999027B3197955" target="_blank" rel="noopener noreferrer">BscScan ↗</a></td></tr>
+                  <tr><td class="p-4">PancakeSwap V2 Pair</td><td class="p-4 font-mono text-xs">0x5099f26E4E83C3C315c7aAA30b40a52a50BbB8b0</td><td class="p-4"><a class="text-cyan hover:text-white" href="https://bscscan.com/address/0x5099f26E4E83C3C315c7aAA30b40a52a50BbB8b0" target="_blank" rel="noopener noreferrer">Pair ↗</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-5 rounded-xl border border-cyan/15 bg-cyan/[.04] p-5 text-sm leading-7 text-slate-300">
+              <p><span data-wp-i18n="contracts.creation">Pair creation transaction</span>: <a class="break-all text-cyan hover:text-white" href="https://bscscan.com/tx/0x272d572927162c8b599f59542f9f53ffcd5e53de969e879f35c8b2b8f8c6f9a8" target="_blank" rel="noopener noreferrer">0x272d572927162c8b599f59542f9f53ffcd5e53de969e879f35c8b2b8f8c6f9a8 ↗</a></p>
+              <p><span data-wp-i18n="contracts.block">Confirmed block</span>: <strong class="text-white">134154981</strong></p>
+              <p><span data-wp-i18n="contracts.initialPool">Initial pool</span>: <strong class="text-white">30 PLUG + 3 USDT</strong></p>
+            </div>
+            <h3 class="mt-8 text-xl font-black text-white" data-wp-i18n="security.title">Security properties and administrator powers</h3>
+            <ul class="mt-4 grid gap-3 text-sm leading-7 text-slate-400 sm:grid-cols-2">
+              <li class="rounded-xl border border-white/10 bg-black/20 p-4" data-wp-i18n="security.item1">Token supply is fixed at deployment; the token exposes no mint function and applies no transfer tax.</li>
+              <li class="rounded-xl border border-white/10 bg-black/20 p-4" data-wp-i18n="security.item2">Gateway uses ReentrancyGuard, Pausable, SafeERC20, a 25% platform-fee cap, and a 10% burn cap.</li>
+              <li class="rounded-xl border border-white/10 bg-black/20 p-4" data-wp-i18n="security.item3">Vendor transfers USDT directly to treasury and can sell only PLUG already held in its inventory.</li>
+              <li class="rounded-xl border border-white/10 bg-black/20 p-4" data-wp-i18n="security.item4">Operational roles are address-separated: treasury and LP deployer are distinct. Off-chain cold-storage practices cannot be proven by contracts alone.</li>
+            </ul>
+            <div class="mt-5 rounded-xl border border-amber-300/15 bg-amber-300/[.04] p-5 text-sm leading-7 text-amber-100/75" data-wp-i18n="security.admin">Administrator disclosure: the Vendor owner can change its rate and treasury, pause sales, and withdraw unsold inventory. The Gateway owner can change fees within hard caps, change treasury, and pause spending. Users should monitor these settings on-chain.</div>
+          </section>
+
+          <section id="quickstart" class="panel scroll-mt-24 p-6 sm:p-8">
+            <p class="font-mono text-xs uppercase tracking-[.2em] text-gold" data-wp-i18n="chapter.5">Chapter 5</p>
+            <h2 class="mt-3 font-display text-3xl uppercase text-white sm:text-4xl" data-wp-i18n="quickstart.title">Game developer 3-minute quickstart</h2>
+            <p class="mt-6 leading-8 text-slate-300" data-wp-i18n="quickstart.p1">The deployed ABI uses registerGame and spendPoints. Functions named registerApp or spend do not exist on the canonical Gateway. Parse confirmed events instead of predicting an App ID or trusting a pending transaction.</p>
+
+            <h3 class="mt-8 text-xl font-black text-white" data-wp-i18n="quickstart.step1">Step 1 — Solidity interfaces</h3>
+            <div class="relative mt-4">
+              <button type="button" class="code-copy absolute right-3 top-3 rounded-md border border-white/10 bg-void px-3 py-1.5 text-[10px] font-bold text-slate-400 hover:text-cyan" data-copy-target="solidityCode" data-wp-i18n="common.copy">Copy</button>
+              <pre class="overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-5 pt-12 text-xs leading-6 text-slate-300"><code id="solidityCode">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+interface IERC20Minimal {
+    function approve(address spender, uint256 amount) external returns (bool);
+    function allowance(address owner, address spender) external view returns (uint256);
+}
+
+interface IPlugPointGateway {
+    event GameRegistered(
+        uint256 indexed appId,
+        address indexed owner,
+        address payoutWallet,
+        string metadataUri
+    );
+
+    event PointsSpent(
+        uint256 indexed appId,
+        address indexed player,
+        uint256 totalAmount,
+        uint256 creatorShare,
+        uint256 platformShare,
+        uint256 burnedAmount,
+        string orderId
+    );
+
+    function registerGame(address payoutWallet, string calldata metadataUri)
+        external returns (uint256 appId);
+
+    function spendPoints(uint256 appId, uint256 amount, string calldata orderId)
+        external;
+}</code></pre>
+            </div>
+
+            <h3 class="mt-8 text-xl font-black text-white" data-wp-i18n="quickstart.step2">Step 2 — Register and charge with ethers.js v6</h3>
+            <div class="relative mt-4">
+              <button type="button" class="code-copy absolute right-3 top-3 rounded-md border border-white/10 bg-void px-3 py-1.5 text-[10px] font-bold text-slate-400 hover:text-cyan" data-copy-target="ethersCode" data-wp-i18n="common.copy">Copy</button>
+              <pre class="overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-5 pt-12 text-xs leading-6 text-slate-300"><code id="ethersCode">import { BrowserProvider, Contract, parseUnits } from "ethers";
+
+const CHAIN_ID = 56n;
+const PLUG = "0x39801De9D63234D3Cb1344b9df46727001085F4F";
+const GATEWAY = "0x0ADD4F526A4e512EAfF46208B45FF298A78a8c09";
+
+const erc20Abi = [
+  "function allowance(address,address) view returns (uint256)",
+  "function approve(address,uint256) returns (bool)"
+];
+const gatewayAbi = [
+  "function registerGame(address,string) returns (uint256)",
+  "function games(uint256) view returns (address,address,string,bool,uint256)",
+  "function spendPoints(uint256,uint256,string)",
+  "event GameRegistered(uint256 indexed appId,address indexed owner,address payoutWallet,string metadataUri)",
+  "event PointsSpent(uint256 indexed appId,address indexed player,uint256 totalAmount,uint256 creatorShare,uint256 platformShare,uint256 burnedAmount,string orderId)"
+];
+
+async function contracts() {
+  if (!window.ethereum) throw new Error("EVM wallet not found");
+  const provider = new BrowserProvider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  const network = await provider.getNetwork();
+  if (network.chainId !== CHAIN_ID) throw new Error("Switch to BSC Mainnet");
+  const signer = await provider.getSigner();
+  return {
+    signer,
+    plug: new Contract(PLUG, erc20Abi, signer),
+    gateway: new Contract(GATEWAY, gatewayAbi, signer)
+  };
+}
+
+export async function registerMyGame(payoutWallet, metadataUri) {
+  const { gateway } = await contracts();
+  const tx = await gateway.registerGame(payoutWallet, metadataUri);
+  const receipt = await tx.wait();
+  for (const log of receipt.logs) {
+    try {
+      const event = gateway.interface.parseLog(log);
+      if (event?.name === "GameRegistered") return event.args.appId;
+    } catch {}
+  }
+  throw new Error("Confirmed transaction has no GameRegistered event");
+}
+
+export async function spendPlug(appId, amountPlug, orderId) {
+  const { signer, plug, gateway } = await contracts();
+  const player = await signer.getAddress();
+  const amount = parseUnits(amountPlug, 18);
+  const game = await gateway.games(appId);
+  if (!game[3]) throw new Error("Game is inactive");
+
+  if ((await plug.allowance(player, GATEWAY)) &lt; amount) {
+    await (await plug.approve(GATEWAY, amount)).wait();
+  }
+  const tx = await gateway.spendPoints(appId, amount, orderId);
+  return await tx.wait();
+}</code></pre>
+            </div>
+
+            <h3 class="mt-8 text-xl font-black text-white" data-wp-i18n="quickstart.step3">Step 3 — Verify settlement in a web3.js backend</h3>
+            <div class="relative mt-4">
+              <button type="button" class="code-copy absolute right-3 top-3 rounded-md border border-white/10 bg-void px-3 py-1.5 text-[10px] font-bold text-slate-400 hover:text-cyan" data-copy-target="web3Code" data-wp-i18n="common.copy">Copy</button>
+              <pre class="overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-5 pt-12 text-xs leading-6 text-slate-300"><code id="web3Code">import Web3 from "web3";
+
+const web3 = new Web3("https://bsc-dataseed.binance.org/");
+const gatewayAddress = "0x0ADD4F526A4e512EAfF46208B45FF298A78a8c09";
+const pointsSpentAbi = [{
+  type: "event", name: "PointsSpent", anonymous: false,
+  inputs: [
+    { indexed: true, name: "appId", type: "uint256" },
+    { indexed: true, name: "player", type: "address" },
+    { indexed: false, name: "totalAmount", type: "uint256" },
+    { indexed: false, name: "creatorShare", type: "uint256" },
+    { indexed: false, name: "platformShare", type: "uint256" },
+    { indexed: false, name: "burnedAmount", type: "uint256" },
+    { indexed: false, name: "orderId", type: "string" }
+  ]
+}];
+const gateway = new web3.eth.Contract(pointsSpentAbi, gatewayAddress);
+
+export async function verifyPayment(txHash, expected) {
+  const receipt = await web3.eth.getTransactionReceipt(txHash);
+  if (!receipt?.status || receipt.to?.toLowerCase() !== gatewayAddress.toLowerCase()) {
+    throw new Error("Not a confirmed Gateway transaction");
+  }
+  const events = await gateway.getPastEvents("PointsSpent", {
+    fromBlock: receipt.blockNumber,
+    toBlock: receipt.blockNumber
+  });
+  const paid = events.find((event) =&gt;
+    event.transactionHash.toLowerCase() === txHash.toLowerCase() &amp;&amp;
+    event.returnValues.appId === String(expected.appId) &amp;&amp;
+    event.returnValues.player.toLowerCase() === expected.player.toLowerCase() &amp;&amp;
+    event.returnValues.orderId === expected.orderId
+  );
+  if (!paid) throw new Error("Matching PointsSpent event not found");
+  return paid.returnValues; // persist txHash + logIndex as an idempotency key
+}</code></pre>
+            </div>
+
+            <div class="mt-7 rounded-xl border border-mint/20 bg-mint/[.04] p-5 text-sm leading-7 text-slate-300">
+              <strong class="text-mint" data-wp-i18n="quickstart.productionTitle">Production checklist</strong>
+              <p class="mt-2" data-wp-i18n="quickstart.productionBody">Require Chain ID 56, wait for confirmations appropriate to item value, verify the canonical Gateway address and every event field, enforce uniqueness on orderId and transactionHash:logIndex, and handle chain reorganizations before delivering valuable items.</p>
+            </div>
+          </section>
+
+          <section id="risks" class="panel scroll-mt-24 p-6 sm:p-8">
+            <p class="font-mono text-xs uppercase tracking-[.2em] text-gold" data-wp-i18n="chapter.6">Chapter 6</p>
+            <h2 class="mt-3 font-display text-3xl uppercase text-white sm:text-4xl" data-wp-i18n="risks.title">Risk disclosure and disclaimer</h2>
+            <ul class="mt-6 space-y-4 text-sm leading-7 text-slate-400">
+              <li class="rounded-xl border border-white/10 bg-black/20 p-5" data-wp-i18n="risks.item1">PLUG is designed as a utility game point. This document is technical information, not investment, legal, tax, or financial advice, and does not promise profit or redemption.</li>
+              <li class="rounded-xl border border-white/10 bg-black/20 p-5" data-wp-i18n="risks.item2">The initial PancakeSwap pool was created with 30 PLUG and 3 USDT. That is shallow liquidity: even modest trades can produce material price impact. Always inspect the live quote and slippage; split larger swaps.</li>
+              <li class="rounded-xl border border-white/10 bg-black/20 p-5" data-wp-i18n="risks.item3">Smart contracts, RPC providers, wallets, frontends, administrator keys, stablecoins, and AMMs each carry technical or operational risk. Verified source code does not eliminate all vulnerabilities.</li>
+              <li class="rounded-xl border border-white/10 bg-black/20 p-5" data-wp-i18n="risks.item4">Developers are responsible for local consumer, gaming, tax, sanctions, privacy, and virtual-asset compliance. Valuable randomness requires an audited commit-reveal or VRF design; the website demo is not verifiable randomness.</li>
+            </ul>
+            <div class="mt-8 border-t border-white/10 pt-8">
+              <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cyan" data-wp-i18n="legal.eyebrow">LICENSE &amp; COPYRIGHT</p>
+              <h3 class="mt-3 text-2xl font-black text-white" data-wp-i18n="legal.title">Copyright ownership and platform disclaimer</h3>
+              <div class="mt-5 grid gap-4 lg:grid-cols-3">
+                <article class="rounded-xl border border-white/10 bg-black/20 p-5">
+                  <h4 class="font-bold text-gold" data-wp-i18n="legal.brandTitle">Brand &amp; content copyright</h4>
+                  <p class="mt-3 text-sm leading-7 text-slate-400" data-wp-i18n="legal.brandBody">The PlugPoint name, visual identity, website interface design, and Whitepaper are copyrighted by PlugPoint Protocol. They may not be reproduced without authorization or used for impersonation, phishing, or deceptive websites.</p>
+                </article>
+                <article class="rounded-xl border border-white/10 bg-black/20 p-5">
+                  <h4 class="font-bold text-mint" data-wp-i18n="legal.sdkTitle">Developer SDK license</h4>
+                  <p class="mt-3 text-sm leading-7 text-slate-400" data-wp-i18n="legal.sdkBody">Under the MIT License, external game developers may freely use, modify, and integrate the PlugPointGateway and PlugPointVendor contract interfaces and official example code into commercial or non-commercial game projects.</p>
+                </article>
+                <article class="rounded-xl border border-white/10 bg-black/20 p-5">
+                  <h4 class="font-bold text-cyan" data-wp-i18n="legal.thirdPartyTitle">Third-party IP &amp; independent liability</h4>
+                  <p class="mt-3 text-sm leading-7 text-slate-400" data-wp-i18n="legal.thirdPartyBody">PlugPoint is a neutral on-chain point-settlement protocol. Intellectual-property rights in third-party games, servers, and digital content remain with their respective creators. Each creator bears sole responsibility for content compliance and copyright disputes; PlugPoint Protocol assumes no joint or derivative liability for third-party content.</p>
+                </article>
+              </div>
+            </div>
+            <div class="mt-7 flex flex-wrap gap-3">
+              <a class="btn-primary rounded-xl px-5 py-3 text-xs font-black uppercase tracking-wider" href="/" data-wp-i18n="risks.home">Open protocol dashboard</a>
+              <a class="btn-secondary rounded-xl px-5 py-3 text-xs font-black uppercase tracking-wider" href="https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955&amp;inputCurrency=0x39801De9D63234D3Cb1344b9df46727001085F4F" target="_blank" rel="noopener noreferrer" data-wp-i18n="risks.swap">View live PancakeSwap quote ↗</a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer class="relative z-10 border-t border-white/10 bg-black/25">
+      <div class="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-4 py-8 text-xs text-slate-500 sm:px-6 md:flex-row md:items-center lg:px-8">
+        <div class="flex max-w-2xl items-start gap-3 leading-5"><img src="/logo.svg" alt="" class="mt-0.5 h-8 w-8 shrink-0" /><span data-wp-i18n="footer.copyright">© 2026 PlugPoint Protocol. All rights reserved. Integration SDK &amp; smart contract interfaces are provided under the MIT License.</span></div>
+        <div class="flex flex-wrap gap-x-5 gap-y-2">
+          <a class="hover:text-cyan" href="mailto:admin@plugpoint.cc">admin@plugpoint.cc</a>
+          <a class="hover:text-cyan" href="/llms.txt">llms.txt</a>
+          <a class="hover:text-cyan" href="/contracts.json">contracts.json</a>
+        </div>
+      </div>
+    </footer>
+
+    <div id="copyToast" class="pointer-events-none fixed bottom-5 right-5 z-[60] translate-y-3 rounded-lg border border-cyan/20 bg-void/95 px-4 py-3 text-xs text-cyan opacity-0 shadow-xl transition" role="status" aria-live="polite"></div>
+    <script defer src="/whitepaper.js?v=20261118-legal1"></script>
+  </body>
+</html>

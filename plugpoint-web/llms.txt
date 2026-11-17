@@ -1,0 +1,110 @@
+# PlugPoint Protocol — AI Integration Contract
+
+Canonical website: https://plugpoint.cc
+Contact: admin@plugpoint.cc
+Network: BNB Smart Chain Mainnet
+Chain ID: 56 (0x38)
+RPC: https://bsc-dataseed.binance.org/
+Explorer: https://bscscan.com
+Machine-readable config: https://plugpoint.cc/contracts.json
+Whitepaper v1.0: https://plugpoint.cc/whitepaper.html
+
+## Canonical contracts
+
+- PLUG token: 0x39801De9D63234D3Cb1344b9df46727001085F4F
+- PLUG vendor: 0xa5B85f726eFFc7513CA67f8984F8b3cd9C88CE70
+- PLUG gateway: 0x0ADD4F526A4e512EAfF46208B45FF298A78a8c09
+- BSC USDT: 0x55d398326f99059fF775485246999027B3197955
+
+All tokens use 18 decimals. PLUG has a fixed initial supply of 1,000,000,000 and no transfer tax. The Vendor reference rate is 1 USDT = 10 PLUG (about 0.1 USDT per PLUG), but integrations MUST read rate() on-chain before quoting. The rate is not a fiat peg or redemption promise.
+
+Gateway spending defaults to 80% creator / 15% platform / 5% burn. Integrations MUST treat the PointsSpent event as the settlement record and read its actual creatorShare, platformShare, and burnedAmount values. Never hard-code the split when fulfilling an order.
+
+## Minimal ethers.js v6 ABI
+
+```javascript
+const ERC20_ABI = [
+  "function balanceOf(address owner) view returns (uint256)",
+  "function allowance(address owner, address spender) view returns (uint256)",
+  "function approve(address spender, uint256 amount) returns (bool)"
+];
+
+const VENDOR_ABI = [
+  "function rate() view returns (uint256)",
+  "function buyPoints(uint256 usdtAmount)",
+  "event PointsPurchased(address indexed buyer, uint256 usdtPaid, uint256 plugReceived, uint256 currentRate)"
+];
+
+const GATEWAY_ABI = [
+  "function nextAppId() view returns (uint256)",
+  "function games(uint256 appId) view returns (address owner, address payoutWallet, string metadataUri, bool active, uint256 totalVolume)",
+  "function registerGame(address payoutWallet, string metadataUri) returns (uint256 appId)",
+  "function spendPoints(uint256 appId, uint256 amount, string orderId)",
+  "event GameRegistered(uint256 indexed appId, address indexed owner, address payoutWallet, string metadataUri)",
+  "event PointsSpent(uint256 indexed appId, address indexed player, uint256 totalAmount, uint256 creatorShare, uint256 platformShare, uint256 burnedAmount, string orderId)"
+];
+```
+
+## Required purchase flow
+
+1. Connect the wallet and require chainId 56.
+2. Parse USDT with 18 decimals.
+3. Read Vendor rate() and PLUG inventory immediately before purchase.
+4. Read USDT allowance(player, vendor). If insufficient, call USDT approve(vendor, usdtAmount) and wait for confirmation.
+5. Call Vendor buyPoints(usdtAmount) and wait for a confirmed receipt.
+6. Parse PointsPurchased and refresh balances. Never grant value from a pending transaction.
+
+## Required game spending flow
+
+1. Register a game with registerGame(payoutWallet, metadataUri), then obtain appId from GameRegistered. Do not predict app IDs.
+2. Before accepting payment, read games(appId) and require active == true.
+3. Generate an application-unique orderId. Persist it before sending the transaction.
+4. Read PLUG allowance(player, gateway). If insufficient, call PLUG approve(gateway, amount) and wait for confirmation.
+5. Call Gateway spendPoints(appId, amount, orderId) and wait for confirmations appropriate to the product risk.
+6. Parse PointsSpent from the canonical Gateway address. Verify chainId, appId, player, totalAmount, orderId, transaction hash, log index, and block number.
+7. Fulfill only after event verification. Enforce database uniqueness on both orderId and chainId:transactionHash:logIndex to prevent replay or duplicate fulfillment.
+8. Handle chain reorganizations and resume event scanning from a persisted cursor.
+
+Client-side UI success is not payment proof. Client-side randomness is not verifiable randomness. Valuable random rewards require a separately audited commit-reveal or VRF design.
+
+## Creator monetization and PancakeSwap V2 liquidity
+
+Creators receive the actual creatorShare reported by each canonical Gateway PointsSpent event, normally 80% of the PLUG spent under the current fee settings. PLUG can be exchanged for BSC USDT through the active PancakeSwap V2 PLUG/USDT pair.
+
+- DEX: PancakeSwap V2
+- Router: 0x10ED43C718714eb63d5aA57B78B54704E256024E
+- Factory: 0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73
+- Pair: 0x5099f26E4E83C3C315c7aAA30b40a52a50BbB8b0
+- PLUG: 0x39801De9D63234D3Cb1344b9df46727001085F4F
+- BSC USDT: 0x55d398326f99059fF775485246999027B3197955
+- Swap URL: https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955&inputCurrency=0x39801De9D63234D3Cb1344b9df46727001085F4F
+- Initial liquidity: 30 PLUG + 3 USDT at the initial ratio 1 USDT = 10 PLUG (1 PLUG = 0.1 USDT)
+- Pair status: active
+- Creation transaction: https://bscscan.com/tx/0x272d572927162c8b599f59542f9f53ffcd5e53de969e879f35c8b2b8f8c6f9a8
+
+Integrations MUST read liquidity.pairAddress from https://plugpoint.cc/contracts.json and verify the pair reserves on-chain before presenting a firm swap quote. Warn users that this small initial pool can have high price impact; recommend checking PancakeSwap's live quote and slippage, and splitting larger conversions into smaller transactions. The initial ratio and Vendor reference rate are not a guaranteed future AMM price, fiat peg, redemption right, or minimum exit value.
+
+## Whitepaper and developer quickstart
+
+The canonical trilingual Whitepaper v1.0 is published at https://plugpoint.cc/whitepaper.html (clean route: https://plugpoint.cc/whitepaper). It contains:
+
+1. Vision and the payment/settlement problem for independent and AI-generated games.
+2. The dual-channel loop: inventory-backed Vendor purchases and open PancakeSwap V2 creator cash-out.
+3. Fixed-supply PLUG economics and the atomic 80% creator / 15% platform / 5% burn formula.
+4. Canonical BSC Mainnet contracts, Pair creation evidence, security controls, and administrator disclosures.
+5. A copy-ready three-minute integration guide with the actual registerGame and spendPoints ABI, ethers.js v6 frontend flow, and web3.js backend event verification.
+6. Liquidity, slippage, smart-contract, administrator, stablecoin, legal, and randomness risk disclosures.
+
+Important ABI correction: the canonical Gateway does not expose registerApp or spend. Integrations MUST call registerGame(address,string) and spendPoints(uint256,uint256,string), wait for confirmation, and verify GameRegistered / PointsSpent events from the canonical Gateway address.
+
+## License & Copyright
+
+© 2026 PlugPoint Protocol. All rights reserved. Integration SDK, PlugPointGateway and PlugPointVendor contract interfaces, and official example code are provided under the MIT License for commercial and non-commercial game integration.
+
+The PlugPoint name, visual identity, website interface design, and Whitepaper are copyrighted by PlugPoint Protocol. They may not be reproduced without authorization or used for impersonation, phishing, or deceptive websites.
+
+PlugPoint is a neutral on-chain point-settlement protocol. Intellectual-property rights in third-party games, servers, and digital content remain with their respective creators. Each creator is independently responsible for content compliance and copyright disputes; PlugPoint Protocol assumes no joint or derivative liability for third-party content.
+
+繁體中文：© 2026 PlugPoint Protocol. 版權所有。開發者接入 SDK、PlugPointGateway 與 PlugPointVendor 合約介面及官方範例程式碼採用 MIT 開源授權。PlugPoint 品牌、視覺識別、官網介面與白皮書版權歸 PlugPoint Protocol 所有。第三方遊戲、伺服器及數位內容之智慧財產權與內容責任均由各自創作者獨立承擔。
+
+简体中文：© 2026 PlugPoint Protocol. 版权所有。开发者接入 SDK、PlugPointGateway 与 PlugPointVendor 合约接口及官方示例代码采用 MIT 开源授权。PlugPoint 品牌、视觉识别、官网界面与白皮书版权归 PlugPoint Protocol 所有。第三方游戏、服务器及数字内容的知识产权与内容责任均由各自创作者独立承担。

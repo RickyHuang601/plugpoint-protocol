@@ -1,0 +1,49 @@
+{
+  "protocol": "PlugPoint Protocol",
+  "website": "https://plugpoint.cc",
+  "contactEmail": "admin@plugpoint.cc",
+  "logoUrl": "https://plugpoint.cc/logo.png",
+  "network": {
+    "name": "BNB Smart Chain Mainnet",
+    "chainId": 56,
+    "chainIdHex": "0x38",
+    "rpcUrl": "https://bsc-dataseed.binance.org/",
+    "blockExplorer": "https://bscscan.com"
+  },
+  "contracts": {
+    "plugPointToken": "0x39801De9D63234D3Cb1344b9df46727001085F4F",
+    "plugPointVendor": "0xa5B85f726eFFc7513CA67f8984F8b3cd9C88CE70",
+    "plugPointGateway": "0x0ADD4F526A4e512EAfF46208B45FF298A78a8c09",
+    "usdt": "0x55d398326f99059fF775485246999027B3197955"
+  },
+  "demo": {
+    "appId": 1,
+    "name": "Cyber Gacha"
+  },
+  "economics": {
+    "decimals": 18,
+    "vendorExchangeRate": 10,
+    "referencePriceUsdt": 0.1,
+    "creatorBps": 8000,
+    "platformBps": 1500,
+    "burnBps": 500,
+    "bpsDenominator": 10000
+  },
+  "liquidity": {
+    "dex": "PancakeSwap V2",
+    "routerAddress": "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+    "factoryAddress": "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73",
+    "pairAddress": "0x5099f26E4E83C3C315c7aAA30b40a52a50BbB8b0",
+    "pairStatus": "active",
+    "creationTransaction": "0x272d572927162c8b599f59542f9f53ffcd5e53de969e879f35c8b2b8f8c6f9a8",
+    "createdBlock": 134154981,
+    "swapUrl": "https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955&inputCurrency=0x39801De9D63234D3Cb1344b9df46727001085F4F",
+    "initialLiquidity": {
+      "plug": "30",
+      "usdt": "3",
+      "plugMinimum": "29.7",
+      "usdtMinimum": "2.97",
+      "referenceRatio": "1 USDT = 10 PLUG"
+    }
+  }
+}
