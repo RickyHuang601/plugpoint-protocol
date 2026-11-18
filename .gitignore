@@ -23,7 +23,3 @@ security-reports/
 plugpoint-security-worker/
 scripts/configure-cloudflare-security.mjs
 plugpoint-web/_headers
-
-# Operator-only financial console (kept locally and deployed separately)
-plugpoint-web/finance.html
-plugpoint-web/finance.js
