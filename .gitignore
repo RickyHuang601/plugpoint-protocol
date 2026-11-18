@@ -23,3 +23,7 @@ security-reports/
 plugpoint-security-worker/
 scripts/configure-cloudflare-security.mjs
 plugpoint-web/_headers
+
+# Operator-only finance console: deployed manually, never published to GitHub
+plugpoint-web/finance.html
+plugpoint-web/finance.js
